@@ -10,6 +10,7 @@ app.use(cors())
 const port = process.env.PORT || 5001;
 
 app.use(express.json());
+// send & receive all requests as json
 
 app.use(userRouter);
 
