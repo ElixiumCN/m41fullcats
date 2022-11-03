@@ -50,16 +50,36 @@ exports.deleteUser = async (req, res) => {
     }
 }
 
-exports.loginUser = async (req, res) => {
-    try {
-// TASK is to generate a token on createuser and loginuser. This token should include unique information from the db entry. The token needs to sent back in the response and have an an endpoint that will find the user given just the token.
-        const token = await jwt.sign({_id: req.user._id}, process.env.SECRET);
-        res.status(200).send({user: req.user.username, token, text: "Sucessfully logged in"})
+// exports.loginUser = async (req, res) => {
+//     try {
+// // TASK is to generate a token on createuser and loginuser. This token should include unique information from the db entry. The token needs to sent back in the response and have an an endpoint that will find the user given just the token.
+//         const token = await jwt.sign({_id: req.user._id}, process.env.SECRET);
+//         res.status(200).send({user: req.user.username, token, text: "Sucessfully logged in"})
+//     } catch (error) {
+//         console.log(error)
+//         res.status(500).send({error: error.message})
+//     }
+// }
+
+exports.loginUser = async(req, res) => {
+    try { 
+        if (req.user) {
+            res.status(200).send({username: req.user.username})
+        } else {
+            const user = await User.findByCredentials(
+                req.body.username,
+                req.body.password
+            )
+            const token = await jwt.sign({_id: user._id}, process.env.SECRET )
+            res.status(200).send({username: user.username, token, text: "successfully logged in"})
+        }
     } catch (error) {
         console.log(error)
         res.status(500).send({error: error.message})
     }
 }
+
+
 // TODO: add updateUser and deleteUser controllers here
 
 
