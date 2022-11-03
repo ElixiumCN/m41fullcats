@@ -30,8 +30,8 @@ exports.updateUser = async (req, res) => {
             {username: req.body.username},
             {[req.body.key]: req.body.value}
         );
-        res.status(200).send({message: "successfully update a user"})
-
+        res.status(200).send({message: "user field has been updated"})
+// message: "Old username was" + req.body.username + "New username is" + User.username
     } catch (error) {
         console.log(error)
         res.status(500).send({error: error.message})
@@ -42,7 +42,7 @@ exports.updateUser = async (req, res) => {
 exports.deleteUser = async (req, res) => {
     console.log(req.params)
     try {
-        await User.deleteOne({username: req.params.username});
+        await User.deleteOne({username: req.body.username});
         res.status(200).send({message: "successfully deleted a user"})
     } catch (error) {
         console.log(error)

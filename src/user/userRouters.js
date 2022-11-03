@@ -10,7 +10,7 @@ userRouter.post("/loginUser",comparePass, loginUser)
 userRouter.get("/loginUser",tokenCheck, loginUser)
 userRouter.put("/updateUser", updateUser );
 // userRouter.delete("/deleteUser/:username", deleteUser);
-userRouter.delete("/deleteUser/", tokenCheck, deleteUser);
+userRouter.delete("/deleteUser/", deleteUser);
 //TODO: Add update and delete routes here. 
 
 module.exports = userRouter
